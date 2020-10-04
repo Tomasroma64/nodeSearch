@@ -12,7 +12,6 @@
            ├───CHEM<br>
            └───CS<br>
 4. Folder for "qp" and "ms" .pdfs
-5. Download sample from [here](https://drive.google.com/drive/folders/1PjwGFdimLyyXbIhNDICgLYk0n0tYmoqu?usp=sharing)
 
 ## Final structure
 
