@@ -14,7 +14,29 @@
                 console.log(data)
                 $("#query-time").text(data["queryTime"])
                 $("#results-total").text(data["results"].length)
-                data["results"].forEach(element => {
+                for (let i = 0; i < data["results"].length; i++) {
+
+                    if (i > 10) {
+                        let moreResults = data["results"].length - 10
+                        $("#results").append(`
+                        <tr>
+                            <th>
+                            <br>
+                                ${moreResults} more elements
+                            </th>
+                            <th> 
+                                
+                            </th>
+                            <th>
+                                
+                            </th>
+                        </tr>
+                        `);
+                        break
+                    }
+
+                    const element = data["results"][i];
+
 
                     let qpLink = "qp/" + element.replace(".txt", ".pdf")
                     let msLink = "ms/" + element.replace(".txt", ".pdf").replace("qp", "ms")
@@ -28,10 +50,11 @@
                             </th>
                             <th>
                                 <a href=\" ${msLink} "\" + target=\"_blank\"> ms </a>
-                            </th
+                            </th>
                         </tr>
-                        `)
-                });
+                        `);
+
+                }
 
             });
         }
