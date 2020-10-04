@@ -1,0 +1,128 @@
+a {
+    text-decoration: none;
+    color: cadetblue;
+    transition: 0.5s;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: darkslategrey;
+}
+
+select {
+    width: 100px;
+    padding: 5px 5px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    color: black;
+    background-color: transparent;
+    border-bottom: 2px solid #dddddd;
+    transition: 0.5s;
+    height: 25px;
+    margin: 0px;
+}
+
+select:hover {
+    border-bottom: 2px solid gray;
+    outline: none;
+}
+
+input[type=text] {
+    width: 40%;
+    padding: 5px 5px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    color: black;
+    background-color: transparent;
+    border-bottom: 2px solid #dddddd;
+    transition: 0.5s;
+    height: 25px;
+    margin: 0px;
+}
+
+input[type=text]:hover {
+    border-bottom: 2px solid gray;
+    outline: none;
+}
+
+label {
+    width: 10px;
+}
+
+body {
+    margin: 0;
+    font-family: arial;
+    outline: none;
+    /*background-color: lightgray;*/
+}
+
+h1 {
+    margin-top: 50px;
+    margin-bottom: 0px;
+    font-size: 5em;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 70%;
+}
+
+td,
+th {
+    width: auto;
+    border-bottom: 2px solid #dddddd;
+    ;
+    text-align: left;
+    padding: 3px;
+    transition: 0.5s;
+}
+
+td:hover,
+th:hover {
+    border-bottom: 2px solid gray;
+    text-align: left;
+    padding: 3px;
+}
+
+.subject-name {
+    font-weight: 100;
+}
+
+.missing-num {
+    color: green
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-bottom: 0;
+    margin-top: 15px;
+}
+
+p {
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.main {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.summary {
+    margin-left: 2em;
+    margin-right: 0;
+    width: 20%;
+    float: left;
+}
+
+.contents {
+    margin-left: 10px;
+}
+
+.search {
+    float: right;
+    width: 75%;
+}
