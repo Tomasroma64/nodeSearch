@@ -2,61 +2,33 @@
 
 <head>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href=" https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/microsoft/209/right-pointing-magnifying-glass_1f50e.png ">
+    <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/microsoft/209/right-pointing-magnifying-glass_1f50e.png ">
 
     <title>Search</title>
 </head>
 
-<body>
+<body class="dark">
 
-    <div class="main">
-        <h1>Question Searcher 🔍</h1>
-        <!--
-        <div class="summary">
+    <div class="overlay">
+        <h1 id="change-theme">Question Searcher 🔍</h1>
 
-            <h3>Summary: </h3>
-            <div class="contents">
-
-
-                <table>
-                    <tbody>
-
-                        <tr>
-                            <td>
-                                <p class="subject-name"></p>
-                            </td>
-
-                            <td>
-                                <p class="paper-num"></p>
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-                </table>
-
-
-                <p>Found 0 subjects</p>
-
-
-
-            </div>
-
-        </div>
-    -->
         <div class="search">
+            <label for="items">Select subject</label>
+
+            <!-- The value for `for=""` and `id=""` has to be same. -->
+
+            <select id="items">
+              <option value="item-1">CHEM</option>
+              <option value="item-2">PURE</option>
+              <option value="item-3">CS</option>
+            </select>
+
+            <br>
 
             <h3>Question: </h3>
             <div class="contents">
                 <label for="fquestion">Question: </label>
-                <input id="fquestion" placeholder="copy and paste here" autocomplete="off" />
-
-
-
-
-
-
+                <input type="text" id="fquestion" placeholder="copy and paste here" autocomplete="off" />
 
             </div>
             <div>
@@ -64,7 +36,7 @@
                 <p>Time taken: <span id="query-time"></span> ms</p>
                 <p>Papers found: <span id="results-total"></span> </p>
                 <br>
-                <table id="results"></table>
+                <div id="results-table-holder"></div>
             </div>
 
 

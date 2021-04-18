@@ -1,33 +1,178 @@
+html,
+body {
+    transition: 0.2s;
+    margin: 0;
+    padding: 0;
+    padding-top: 3vh;
+    box-sizing: border-box;
+    --font-h: 'Lato', sans-serif;
+    --font-serif: 'Times N', sans-serif;
+    --font-mono: 'Menlo', 'Monaco', monospace;
+    /* default light-mode colors */
+    --foreground-light: #778;
+    --background-block: #eee;
+    --background-hero: #222;
+    --accent: #333333;
+    --accent-transparent: rgba(235, 182, 165, .2);
+    --shadow: rgba(0, 0, 0, 0.14);
+    --project-card-outline: #dbdbdb;
+    --background: #f8f8f8;
+    --font: #111;
+    --a: #B5073F;
+}
+
+#change-theme {
+    cursor: pointer;
+}
+
+.dark {
+    --background: #444;
+    --font: #eee;
+    --a: #141942;
+}
+
+body {
+    font-family: var(--font-serif);
+    background-color: var(--background);
+    color: var(--font);
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+
+/* MIDDLE */
+
+.overlay {
+    max-width: unset;
+    width: calc(100% - 32px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* TYPOGRAPHY */
+
+h1,
+h2,
+h3 {
+    font-weight: bold;
+    line-height: 1.325em;
+    color: var(--foreground-default);
+    margin-top: 0.5em;
+    margin-bottom: 0.3em;
+    display: inline-block;
+    transition: 0.2s
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+p,
+li {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.625em;
+    margin: 0.1em 0;
+    margin-top: 0;
+}
+
+.desktop {
+    display: none !important;
+}
+
+@media only screen and (min-width: 600px) {
+    .overlay {
+        max-width: 1000px;
+    }
+    h1 {
+        margin-top: 0.5em;
+        margin-bottom: 0.3em;
+        margin-top: 50px;
+        margin-bottom: 0px;
+        font-size: 5em;
+    }
+    .desktop {
+        display: initial !important;
+    }
+    .mobile {
+        display: none !important;
+    }
+}
+
+
+/* LINKS */
+
+#general-links {
+    display: table;
+    margin: auto;
+}
+
+#general-links a {
+    margin: 10px;
+}
+
+.fa {
+    margin-right: 3px;
+}
+
+.project-holder {
+    background-color: #fff;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+    margin-bottom: 0.8rem;
+    padding: 0.8rem;
+    border: 1px solid var(--project-card-outline);
+    border-radius: 8px;
+}
+
+
+/* PROJECT STORY */
+
 a {
     text-decoration: none;
-    color: cadetblue;
-    transition: 0.5s;
+    padding: 0 3px;
+    border-radius: 3px;
+    transition: 0.4s;
+    background: var(--a);
+    color: var(--font)
 }
 
 a:hover {
-    text-decoration: underline;
+    background: var(--a-hover);
+    cursor: pointer;
     color: darkslategrey;
+    box-shadow: 0 10px 12px 0 var(--shadow), 0 17px 50px 0 rgba(0, 0, 0, 0.10);
 }
 
-select {
-    width: 100px;
-    padding: 5px 5px;
-    margin: 8px 0;
+input[type=text] {
+    width: 100%;
     box-sizing: border-box;
-    border: none;
-    color: black;
-    background-color: transparent;
-    border-bottom: 2px solid #dddddd;
-    transition: 0.5s;
-    height: 25px;
-    margin: 0px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('https://www.w3schools.com/css/searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
 }
 
-select:hover {
-    border-bottom: 2px solid gray;
-    outline: none;
-}
 
+/*
 input[type=text] {
     width: 40%;
     padding: 5px 5px;
@@ -41,6 +186,7 @@ input[type=text] {
     height: 25px;
     margin: 0px;
 }
+*/
 
 input[type=text]:hover {
     border-bottom: 2px solid gray;
@@ -51,30 +197,16 @@ label {
     width: 10px;
 }
 
-body {
-    margin: 0;
-    font-family: arial;
-    outline: none;
-    /*background-color: lightgray;*/
-}
-
-h1 {
-    margin-top: 50px;
-    margin-bottom: 0px;
-    font-size: 5em;
-}
-
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 70%;
+    width: 100%;
 }
 
 td,
 th {
     width: auto;
     border-bottom: 2px solid #dddddd;
-    ;
     text-align: left;
     padding: 3px;
     transition: 0.5s;
@@ -95,17 +227,6 @@ th:hover {
     color: green
 }
 
-h3 {
-    font-size: 1.5em;
-    margin-bottom: 0;
-    margin-top: 15px;
-}
-
-p {
-    margin-top: 5px;
-    margin-bottom: 0;
-}
-
 .main {
     margin-left: 20%;
     margin-right: 20%;
@@ -122,9 +243,7 @@ p {
     margin-left: 10px;
 }
 
-
-/*
-.search {
-    float: right;
-    width: 75%;
-}*/
+.section {
+    color: gray;
+    font-size: 12px;
+}

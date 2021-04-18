@@ -3,10 +3,11 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 
-const port = 3000;
+const port = 5551;
 
 
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const e = require('express');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -15,73 +16,111 @@ app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
 
 app.get('/styles.css', async(req, res) => {
+    console.log("Serving styles.css")
     res.sendFile(__dirname + '/public/styles.css')
 });
 app.get('/scripts.js', async(req, res) => {
+    console.log("Serving scripts.js")
     res.sendFile(__dirname + '/public/scripts.js')
 });
-/*
-app.get('/favicon.ico', async(req, res) => {
-    res.sendFile(__dirname + '/public/scripts.js')
-});
-*/
 
 
+const subjectsFolder = "subjects";
 
-class searcher {
+class Searcher {
 
-    constructor(subjectName) {
-        this.subjectName = subjectName;
+    constructor(subjectsToLoad) {
+        this.subjectsToLoad = subjectsToLoad;
         this.allTexts = [];
         this.allFiles = [];
 
-        this.loadFiles();
+        this.subjectsToLoad.forEach(subject => {
+            this.allTexts.push(this.loadFiles(subject));
+        });
     }
 
-    loadFiles() {
+    getSubjectName() {
+        return this.subjectsToLoad[0] //TODO: Wont be an array, just variable
+    }
 
-        this.allFiles = fs.readdirSync(path.resolve(__dirname, 'subjects\\' + this.subjectName));
-        for (let file of this.allFiles) {
-            //console.log(file)
-            this.allTexts.push({
+    loadFiles(subjectFolderName) {
+        if (!fs.existsSync(path.resolve(subjectsFolder, subjectFolderName))) throw 'No path for ' + subjectFolderName;
+
+        console.log(`Loading: ${subjectFolderName}`)
+
+        let extracted = []
+        const allFileNames = fs.readdirSync(path.resolve(subjectsFolder, subjectFolderName));
+
+
+        for (let file of allFileNames) {
+            console.log(path.resolve(subjectsFolder, subjectFolderName, file))
+            extracted.push({
                 fileName: file,
-                text: fs.readFileSync("subjects\\" + this.subjectName + "\\" + file, 'utf8')
-            })
+                text: fs.readFileSync((path.resolve(subjectsFolder, subjectFolderName, file)), 'utf8')
+            });
+
         }
 
+        return extracted
     }
 
     searchFor(searchString) {
         var foundIn = [];
+        const searchStringLength = searchString.length;
 
-        for (let file of this.allTexts) {
-            //console.log("looking for in " + file.fileName)
-            if (file.text.includes(searchString)) {
-                foundIn.push(file.fileName)
-            }
+        this.allTexts.forEach(subject => {
+            subject.forEach(file => {
 
-        }
+                if (file.text.includes(searchString)) {
+                    const indexMatch = file.text.indexOf(searchString)
+
+                    foundIn.push({
+                        'fileName': file.fileName,
+                        'section': file.text.substring(indexMatch, indexMatch + searchStringLength + 50)
+                    })
+                }
+            });
+
+        });
+
+
+
 
         return foundIn
     }
 
-    async getFileText(path) {
-        // Blocking step
-        return fs.readFileSync(path, 'utf8');
+    async readFile(path) {
+
+        let dataBuffer = fs.readFileSync(path);
+        pdf(dataBuffer).then(function(data) {
+                return data
+            })
+            .catch(function(error) {
+                console.log("error")
+            })
+
+
 
     }
 
-    static getSubjects(width, height) {
-        return width * height;
-    }
+
 }
+
+
 
 let start = new Date()
 
-let googleIt = new searcher("BIO")
+let toSearch = ["CHEM", "CS"]
+
+let searchers = [];
+toSearch.forEach(subject => {
+    searchers.push(new Searcher([subject]))
+});
+
+//let googleIt = new searcher()
 
 let end = new Date() - start
-console.info('Loading time: %dms', end)
+console.info(`Loading time: ${end}ms`)
 
 
 app.get("/qp/:fileName", (req, res) => {
@@ -97,10 +136,16 @@ app.post("/:search", (req, res) => {
 
     let start = new Date()
 
-    let results = googleIt.searchFor(req.params.search);
+    let results = []
+    searchers.forEach(searcher => {
+        results.push({
+            subjectName: searcher.getSubjectName(),
+            results: searcher.searchFor(req.params.search)
+        });
+    });
 
     let end = new Date() - start
-    console.info('Query time: %dms', end)
+    console.info(`${end}ms: "${req.params.search}"`)
     res.send({
         queryTime: end,
         query: req.params.search,
@@ -108,9 +153,6 @@ app.post("/:search", (req, res) => {
     });
 
 });
-
-
-
 
 
 app.listen(port, () => console.log(process.env.DOMAINNAME || ('http://localhost:' + port)));
